@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { generateAudit } from "@/lib/auditEngine";
 
 export default function SpendForm() {
+    const [auditResult, setAuditResult] = useState<any>(null);
     const [tools, setTools] = useState([
         {
             tool: "Cursor",
@@ -157,10 +159,74 @@ export default function SpendForm() {
                 Add Tool
             </button>
             <button
+                onClick={() => {
+                    const result = generateAudit(tools);
+                    setAuditResult(result);
+                }}
                 className="w-full bg-blue-600 hover:bg-blue-700 transition p-4 rounded-xl font-semibold"
             >
                 Generate Audit
             </button>
+            {auditResult && (
+                <div className="mt-10 border border-gray-700 rounded-2xl p-6 space-y-6">
+
+                    <div>
+                        <h2 className="text-3xl font-bold">
+                            Potential Savings
+                        </h2>
+
+                        <p className="text-5xl font-bold mt-4 text-green-400">
+                            ${auditResult.totalSavings}/mo
+                        </p>
+
+                        <p className="text-gray-400 mt-2">
+                            ${auditResult.annualSavings}/year
+                        </p>
+                    </div>
+
+                    <div className="space-y-4">
+                        {auditResult.recommendations.map((item: any, index: number) => (
+                            <div
+                                key={index}
+                                className="border border-gray-700 rounded-xl p-4"
+                            >
+                                <h3 className="text-xl font-semibold">
+                                    {item.tool}
+                                </h3>
+
+                                <p className="mt-2 text-gray-300">
+                                    Current Plan: {item.currentPlan}
+                                </p>
+
+                                <p className="text-gray-300">
+                                    Recommended Plan: {item.recommendedPlan}
+                                </p>
+
+                                <p className="text-green-400 font-semibold mt-2">
+                                    Save ${item.savings}/month
+                                </p>
+
+                                <p className="text-gray-400 mt-2 text-sm">
+                                    {item.reason}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    {auditResult.shouldRecommendCredex && (
+                        <div className="bg-blue-600 rounded-xl p-5">
+                            <h3 className="text-2xl font-bold">
+                                High Savings Opportunity
+                            </h3>
+
+                            <p className="mt-2">
+                                Your stack may qualify for discounted AI infrastructure credits through Credex.
+                            </p>
+                        </div>
+                    )}
+
+                </div>
+            )}
         </div>
     );
 }
