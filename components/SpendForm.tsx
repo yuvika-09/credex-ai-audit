@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { generateAudit } from "@/lib/auditEngine";
+import { saveAudit } from "@/lib/saveAudit";
+import { useRouter } from "next/navigation";
 
 export default function SpendForm() {
+    const router = useRouter();
     const [auditResult, setAuditResult] = useState<any>(null);
     const [tools, setTools] = useState([
         {
@@ -159,9 +162,23 @@ export default function SpendForm() {
                 Add Tool
             </button>
             <button
-                onClick={() => {
+                onClick={async () => {
+
                     const result = generateAudit(tools);
+
                     setAuditResult(result);
+
+                    const auditId = await saveAudit({
+                        tools,
+                        teamSize,
+                        useCase,
+                        result,
+                        createdAt: new Date(),
+                    });
+
+                    if (auditId) {
+                        router.push(`/audit/${auditId}`);
+                    }
                 }}
                 className="w-full bg-blue-600 hover:bg-blue-700 transition p-4 rounded-xl font-semibold"
             >
