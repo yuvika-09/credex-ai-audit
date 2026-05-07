@@ -1,14 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 export default function AuditPage({
     params,
 }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }) {
+
+    const resolvedParams = use(params);
 
     const [audit, setAudit] = useState<any>(null);
 
@@ -16,7 +18,11 @@ export default function AuditPage({
 
         async function fetchAudit() {
 
-            const docRef = doc(db, "audits", params.id);
+            const docRef = doc(
+                db,
+                "audits",
+                resolvedParams.id
+            );
 
             const docSnap = await getDoc(docRef);
 
@@ -27,7 +33,7 @@ export default function AuditPage({
 
         fetchAudit();
 
-    }, [params.id]);
+    }, [resolvedParams.id]);
 
     if (!audit) {
         return (
@@ -94,6 +100,20 @@ export default function AuditPage({
                     )}
 
                 </div>
+
+                {audit.result.shouldRecommendCredex && (
+                    <div className="bg-blue-600 rounded-2xl p-6 mt-10">
+
+                        <h2 className="text-3xl font-bold">
+                            Large Savings Opportunity
+                        </h2>
+
+                        <p className="mt-3">
+                            Your team may qualify for discounted AI infrastructure credits through Credex.
+                        </p>
+
+                    </div>
+                )}
 
             </div>
 
