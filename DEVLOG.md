@@ -29,6 +29,8 @@
 - Design the first version of the audit engine logic.
 
 
+------------
+
 
 ## Day 2 — 2026-05-07
 
@@ -74,3 +76,54 @@
 - Add transactional email confirmation flow.
 - Improve audit results page design and add Open Graph metadata support.
 - Begin writing automated tests for the audit engine.
+
+
+------------
+
+
+## Day 3 — 2026-05-08
+
+**Hours worked:** 8
+
+**What I did:**
+- Extended the application from a local-only audit tool into a backend-connected product workflow.
+- Integrated Firebase Firestore for persistent audit storage.
+- Implemented shareable audit URLs using dynamic Next.js routes and Firestore document IDs.
+- Built dynamic audit result pages that fetch saved audit data from Firestore.
+- Fixed a Next.js 16 async route params issue in dynamic client components using React `use()` for param resolution.
+- Added AI-generated personalized summaries using the OpenAI API.
+- Refactored AI summary generation from client-side execution into secure server-side API routes to avoid exposing API credentials.
+- Implemented fallback summary handling in case the LLM request fails.
+- Built a lead capture workflow with:
+  - email
+  - company name
+  - role
+  - audit association
+- Added lead persistence into Firestore using a separate `leads` collection.
+- Initially implemented transactional email delivery using Resend, then migrated to EmailJS after Resend account restrictions interrupted testing.
+- Configured EmailJS using environment variables instead of hardcoded credentials.
+- Added loading states, success states, and improved error handling for lead submission.
+- Added lightweight abuse protection using a hidden honeypot field to reduce automated spam submissions.
+- Improved overall audit page polish and UX consistency.
+
+**What I learned:**
+- API integrations should always be isolated behind server-side routes whenever secrets are involved.
+- Next.js App Router behavior in version 16 differs significantly for dynamic params compared to older versions.
+- Email providers can introduce unexpected operational constraints during MVP development, so fallback handling and provider abstraction matter.
+- Small UX improvements like loading states and success feedback dramatically improve perceived product quality.
+
+**Blockers / what I'm stuck on:**
+- Need to improve audit logic sophistication beyond basic downgrade heuristics.
+- Public share pages still need proper Open Graph metadata and preview images.
+- Need to implement automated tests and CI pipeline before polishing the final UI.
+
+**Plan for tomorrow:**
+- Add Open Graph metadata and Twitter preview support for audit URLs.
+- Implement automated tests for the audit engine.
+- Setup GitHub Actions CI workflow.
+- Begin populating PRICING_DATA.md using verified vendor pricing sources.
+- Improve landing page polish and responsive behavior.
+
+
+------------
+
