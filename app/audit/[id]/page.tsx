@@ -3,6 +3,7 @@
 import { use, useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import LeadCapture from "@/components/LeadCapture";
 
 export default function AuditPage({
     params,
@@ -128,6 +129,8 @@ export default function AuditPage({
                 )}
 
             </div>
+
+            <LeadCapture auditId={resolvedParams.id} />
 
         </main>
     );
