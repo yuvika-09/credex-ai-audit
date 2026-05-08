@@ -10,22 +10,24 @@ export async function generateMetadata({
     const resolvedParams = await params;
 
     return {
-        title: "AI Spend Audit Report",
+        title: "AI Spend Audit — Find Hidden AI Tool Savings",
 
         description:
             "Discover hidden savings in your AI tooling stack.",
 
         openGraph: {
-            title: "AI Spend Audit Report",
+            title: "AI Spend Audit — Find Hidden AI Tool Savings",
 
             description:
-                "Discover hidden savings in your AI tooling stack.",
+                "Analyze ChatGPT, Claude, Cursor, Gemini, and other AI subscriptions to uncover overspending and optimization opportunities.",
 
             url: `credex-ai-audit-flax.vercel.app/audit/${resolvedParams.id}`,
 
             siteName: "AI Spend Audit",
 
-            images: ["/og-image.png"],
+            images: [
+                "https://credex-ai-audit-flax.vercel.app/og-logo.png"
+            ],
 
             type: "website",
         },
@@ -33,12 +35,14 @@ export async function generateMetadata({
         twitter: {
             card: "summary_large_image",
 
-            title: "AI Spend Audit Report",
+            title: "AI Spend Audit — Find Hidden AI Tool Savings",
 
             description:
-                "Discover hidden savings in your AI tooling stack.",
+                "Analyze ChatGPT, Claude, Cursor, Gemini, and other AI subscriptions to uncover overspending and optimization opportunities.",
 
-            images: ["/og-image.png"],
+            images: [
+                "https://credex-ai-audit-flax.vercel.app/og-logo.png"
+            ],
         },
     };
 }

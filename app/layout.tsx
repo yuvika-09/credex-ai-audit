@@ -12,34 +12,40 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
+  title: "AI Spend Audit — Find Hidden AI Tool Savings",
+
+  description:
+    "Find hidden savings across ChatGPT, Claude, Cursor, Gemini, and other AI tooling subscriptions.",
+
+  openGraph: {
     title: "AI Spend Audit",
 
     description:
-        "Find hidden savings across ChatGPT, Claude, Cursor, Gemini, and other AI tooling subscriptions.",
+      "Analyze ChatGPT, Claude, Cursor, Gemini, and other AI subscriptions to uncover overspending and optimization opportunities.",
 
-    openGraph: {
-        title: "AI Spend Audit",
+    url: "credex-ai-audit-flax.vercel.app",
 
-        description:
-            "Find hidden savings across your AI tooling stack.",
+    siteName: "AI Spend Audit",
 
-        url: "credex-ai-audit-flax.vercel.app",
+    type: "website",
 
-        siteName: "AI Spend Audit",
+    images: [
+      "https://credex-ai-audit-flax.vercel.app/og-logo.png"
+    ],
+  },
 
-        type: "website",
-    },
+  twitter: {
+    card: "summary_large_image",
 
-    twitter: {
-        card: "summary_large_image",
+    title: "AI Spend Audit",
 
-        title: "AI Spend Audit",
+    description:
+      "Analyze ChatGPT, Claude, Cursor, Gemini, and other AI subscriptions to uncover overspending and optimization opportunities.",
+  },
 
-        description:
-            "Find hidden savings across your AI tooling stack.",
-    },
-
-    images: ["/og-image.png"],
+  images: [
+    "https://credex-ai-audit-flax.vercel.app/og-logo.png"
+  ],
 };
 
 export default function RootLayout({
