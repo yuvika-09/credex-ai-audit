@@ -83,7 +83,7 @@
 
 ## Day 3 — 2026-05-08
 
-**Hours worked:** 8
+**Hours worked:** 6
 
 **What I did:**
 - Extended the application from a local-only audit tool into a backend-connected product workflow.
