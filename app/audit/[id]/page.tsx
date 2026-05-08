@@ -4,6 +4,41 @@ import { use, useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import LeadCapture from "@/components/LeadCapture";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+
+    const resolvedParams = await params;
+
+    return {
+        title: `AI Spend Audit Report`,
+
+        description:
+            "Discover hidden savings in your AI tooling stack.",
+
+        images: ["/og-image.png"],
+
+        openGraph: {
+            title: "AI Spend Audit",
+            description:
+                "Discover hidden savings in your AI tooling stack.",
+            url: `https://credex-ai-audit.vercel.app/audit/${resolvedParams.id}`,
+            siteName: "AI Spend Audit",
+            type: "website",
+        },
+
+        twitter: {
+            card: "summary_large_image",
+            title: "AI Spend Audit",
+            description:
+                "Discover hidden savings in your AI tooling stack.",
+        },
+    };
+}
 
 export default function AuditPage({
     params,
