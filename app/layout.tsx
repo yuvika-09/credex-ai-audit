@@ -18,7 +18,7 @@ export const metadata = {
     "Find hidden savings across ChatGPT, Claude, Cursor, Gemini, and other AI tooling subscriptions.",
 
   openGraph: {
-    title: "AI Spend Audit",
+    title: "AI Spend Audit — Find Hidden AI Tool Savings",
 
     description:
       "Analyze ChatGPT, Claude, Cursor, Gemini, and other AI subscriptions to uncover overspending and optimization opportunities.",
@@ -37,7 +37,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
 
-    title: "AI Spend Audit",
+    title: "AI Spend Audit — Find Hidden AI Tool Savings",
 
     description:
       "Analyze ChatGPT, Claude, Cursor, Gemini, and other AI subscriptions to uncover overspending and optimization opportunities.",
