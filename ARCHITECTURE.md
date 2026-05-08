@@ -229,3 +229,9 @@ Planned future improvements include:
 - referral system
 - admin dashboard
 - pricing auto-sync from vendor APIs
+
+---
+
+## Abuse Protection
+
+A lightweight honeypot field was implemented in the lead capture form to reduce automated spam submissions without adding user friction.
