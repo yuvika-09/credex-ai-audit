@@ -127,3 +127,62 @@
 
 ------------
 
+
+## Day 4 — 2026-05-09
+
+**Hours worked:** 8
+
+**What I did:**
+- Deployed the application publicly using Vercel.
+- Configured production environment variables for:
+  - Firebase
+  - OpenAI
+  - EmailJS
+- Fixed deployment failures caused by missing `OPENAI_API_KEY` values in the Vercel environment configuration.
+- Added Open Graph and Twitter metadata support for audit pages.
+- Refactored the audit route into separate server/client components after discovering that `generateMetadata()` cannot run inside client components marked with `"use client"`.
+- Implemented proper server-side metadata generation while preserving interactive Firebase client rendering.
+- Added shareable Open Graph preview images for audit URLs.
+- Fixed Open Graph image caching issues by renaming preview assets and updating metadata references.
+- Improved metadata titles and descriptions for better social sharing previews.
+- Added Vitest-based automated tests for the audit engine.
+- Implemented tests covering:
+  - downgrade recommendations
+  - annual savings calculations
+  - Credex recommendation thresholds
+  - already-optimal plan handling
+- Added GitHub Actions CI pipeline running lint + tests on every push to `main`.
+- Refactored large parts of the application to use strict TypeScript types instead of `any`.
+- Added shared audit interfaces and typed Firestore document handling.
+- Fixed multiple ESLint and CI failures related to:
+  - explicit `any`
+  - unused imports
+  - React hook warnings
+- Completed major documentation files:
+  - README.md
+  - TESTS.md
+  - ARCHITECTURE.md
+  - PRICING_DATA.md
+  - REFLECTION.md
+  - GTM.md
+  - ECONOMICS.md
+  - METRICS.md
+  - LANDING_COPY.md
+
+**What I learned:**
+- Next.js App Router has strict separation rules between server and client components, especially around metadata generation.
+- CI pipelines expose architectural and typing weaknesses much faster than local-only development.
+- Strong TypeScript typing significantly improves maintainability once the application grows beyond early prototyping.
+- Open Graph metadata and preview images require careful deployment and cache handling to work reliably across platforms.
+
+**Blockers / what I'm stuck on:**
+- Try to complete real user interviews for `USER_INTERVIEWS.md`.
+- Still need a final Lighthouse pass and mobile responsiveness review before submission.
+- Some audit heuristics are intentionally simplified and could be expanded further with more time.
+
+**Plan for tomorrow:**
+- Conduct and document real user interviews.
+- Finalize README screenshots and polish.
+- Run Lighthouse audits and fix any remaining issues.
+- Remove temporary debug logs and cleanup unused code.
+- Perform full end-to-end production testing before submission.
