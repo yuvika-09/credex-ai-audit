@@ -2,255 +2,443 @@
 
 ## Overview
 
-AI Spend Audit is a lightweight SaaS-style web application that helps startups evaluate and optimize spending across AI tooling subscriptions such as ChatGPT, Claude, Cursor, GitHub Copilot, Gemini, and similar products.
+AI Spend Audit is a SaaS-style lead-generation and optimization platform designed to help startups identify overspending across AI tooling subscriptions such as ChatGPT, Claude, Cursor, GitHub Copilot, Gemini, and related products.
 
-The application is intentionally designed around:
+The application was intentionally designed as:
+- a lightweight MVP
+- highly shareable
+- low-friction
+- deployment-friendly
+- explainable from both technical and business perspectives
+
+The architecture prioritizes:
 - fast iteration
-- low infrastructure overhead
-- simple rule-based audit logic
-- shareable public audit reports
-- lead generation for Credex
-
-The current implementation prioritizes shipping speed, clarity, and maintainability over premature optimization.
+- clear data flow
+- minimal operational overhead
+- strong frontend UX
+- deterministic audit recommendations
 
 ---
 
-# Stack Choice
+# System Diagram
 
-## Frontend
-- Next.js 16 (App Router)
-- React
-- TypeScript
-- Tailwind CSS
+```mermaid
+flowchart TD
 
-### Why Next.js
-Next.js was chosen because it provides:
-- dynamic routing for shareable audit pages
-- good SEO support
-- easy deployment on Vercel
-- strong developer experience
-- server/client rendering flexibility
-- built-in metadata support for future Open Graph previews
+    A[User Opens Website]
 
-### Why TypeScript
-TypeScript improves:
-- audit engine reliability
-- maintainability
-- safer refactoring
-- better debugging during rapid iteration
+    --> B[Spend Input Form]
 
-### Why Tailwind CSS
-Tailwind was selected for:
-- fast UI iteration
-- consistent styling
-- responsive layouts
-- avoiding large custom CSS files
+    B --> C[Local Form State Persisted]
 
----
+    B --> D[Audit Engine]
 
-# Backend & Database
+    D --> E[Generate Savings Recommendations]
 
-## Firebase Firestore
+    E --> F[Generate AI Summary API Route]
 
-Firestore is used for:
-- storing completed audits
-- generating unique shareable audit URLs
-- lightweight backend persistence
+    F --> G[OpenAI API]
 
-### Why Firebase
-Firebase was chosen because:
-- setup speed is extremely fast
-- no backend server management required
-- automatic document IDs simplify public audit URLs
-- sufficient for MVP-scale traffic
-- integrates cleanly with Next.js client components
+    E --> H[Save Audit to Firebase]
+
+    H --> I[Generate Shareable Audit URL]
+
+    I --> J[Public Audit Result Page]
+
+    J --> K[Lead Capture Form]
+
+    K --> L[Save Lead to Firebase]
+
+    K --> M[Send Confirmation Email via EmailJS]
+
+    J --> N[Open Graph / Twitter Metadata]
+```
 
 ---
 
-# Audit Engine Design
+# Core Architecture Decisions
 
-The audit engine is intentionally rule-based rather than AI-generated.
+## 1. Rule-Based Audit Engine Instead of AI Recommendations
 
-Example logic:
-- ChatGPT Team is inefficient for teams smaller than 3 users
-- Cursor Business is unnecessary for very small engineering teams
-- Claude Team plans are overkill for low seat counts
+The audit engine itself is deterministic and rule-based rather than LLM-generated.
 
-The reasoning for using deterministic rules:
-- pricing recommendations should be explainable
-- financial recommendations need predictable outputs
-- AI hallucinations would reduce trustworthiness
-- rules are easier to test and validate
+This decision was intentional because:
+- financial recommendations should be explainable
+- pricing logic should be predictable
+- users need transparent savings calculations
+- deterministic outputs are easier to test
 
-The audit engine currently:
-1. evaluates each tool independently
-2. checks for downgrade opportunities
-3. calculates monthly savings
-4. calculates annual savings
-5. determines whether Credex recommendations should be shown
+The AI layer is only used for generating personalized natural-language summaries after the audit calculations are complete.
+
+This separation improves:
+- reliability
+- trustworthiness
+- debuggability
+- testability
+
+---
+
+## 2. Next.js App Router Architecture
+
+The application uses Next.js App Router with a split server/client component architecture.
+
+### Server Components
+Used for:
+- metadata generation
+- Open Graph configuration
+- route-level rendering
+
+### Client Components
+Used for:
+- interactive forms
+- Firebase reads/writes
+- local state
+- dynamic UI updates
+
+This separation became especially important after implementing dynamic metadata generation for shareable audit URLs.
 
 ---
 
 # Data Flow
 
-```mermaid
-flowchart TD
+## Step 1 — User Input
 
-A[User Opens Landing Page]
---> B[Fills Spend Form]
+Users enter:
+- AI tools
+- subscription plans
+- monthly spend
+- seat counts
+- team size
+- primary use case
 
-B --> C[Generate Audit]
-
-C --> D[Audit Engine Runs]
-
-D --> E[Calculate Savings & Recommendations]
-
-E --> F[Save Audit to Firestore]
-
-F --> G[Generate Unique Audit URL]
-
-G --> H[Redirect User to Audit Page]
-
-H --> I[Fetch Audit From Firestore]
-
-I --> J[Display Recommendations & Savings]
-```
+The form state is persisted locally using `localStorage` so users do not lose progress after refreshes.
 
 ---
 
-# Current Project Structure
+## Step 2 — Audit Generation
+
+The frontend passes normalized tool data into the audit engine.
+
+The audit engine:
+- evaluates pricing heuristics
+- identifies downgrade opportunities
+- estimates monthly savings
+- estimates annual savings
+- determines whether Credex should be promoted prominently
+
+The engine returns:
+- per-tool recommendations
+- total savings
+- annualized savings
+- reasoning text
+
+---
+
+## Step 3 — AI Summary Generation
+
+After deterministic recommendations are generated, the frontend calls a Next.js API route.
+
+The API route:
+- securely initializes the OpenAI SDK
+- builds a prompt from audit results
+- generates a short personalized summary
+- returns fallback text if the API fails
+
+This architecture prevents API credentials from ever reaching the browser.
+
+---
+
+## Step 4 — Audit Persistence
+
+Audit results are stored in Firebase Firestore.
+
+Each audit document contains:
+- original user inputs
+- generated recommendations
+- savings totals
+- AI summary
+- timestamp
+
+Firestore automatically generates a document ID which becomes the shareable public audit URL.
+
+Example:
 
 ```txt
-app/
-  audit/[id]/
-  page.tsx
-
-components/
-  SpendForm.tsx
-
-lib/
-  auditEngine.ts
-  firebase.ts
-  saveAudit.ts
-
-data/
-  pricing.ts
-
-types/
-
-tests/
+/audit/abc123
 ```
 
 ---
 
-# Shareable Audit URLs
+## Step 5 — Shareable Audit Pages
 
-Each audit is saved as a Firestore document.
+Dynamic audit routes fetch audit data directly from Firestore.
 
-Firestore automatically generates unique IDs such as:
+Public versions intentionally exclude:
+- email addresses
+- company names
+- private identifying details
 
-```txt
-/audit/abc123xyz
-```
+Only:
+- tooling stack
+- recommendations
+- savings information
 
-This enables:
-- public sharing
-- future Open Graph previews
-- viral distribution loops
-- easier analytics tracking
+are exposed publicly.
 
-Sensitive information such as email or company details will not be exposed in public audit pages.
+This supports:
+- social sharing
+- screenshots
+- viral distribution
+
+while minimizing privacy risks.
 
 ---
 
-# Scaling Considerations (10k audits/day)
+## Step 6 — Lead Capture
 
-If the application needed to support significantly higher scale, I would change several things:
+Users can optionally submit:
+- email
+- company name
+- role
 
-## Move Audit Logic to API Routes
-Currently some logic runs client-side for development speed.
+after receiving audit value.
 
-At higher scale:
-- move calculations to server-side API routes
-- centralize recommendation logic
-- reduce client bundle size
+This sequencing was intentional because:
+- value-before-gating improves trust
+- friction remains low
+- conversion rates increase
 
-## Add Caching
-Frequently repeated audit configurations could be cached using:
-- Redis
-- Vercel Edge Config
-- CDN caching
+Lead data is stored in a dedicated Firestore collection.
 
-## Separate Public & Private Data
-Public audit results and private lead data should live in separate collections/tables with stricter permissions.
+---
 
-## Queue AI Summary Generation
-AI-generated summaries should move to:
-- background jobs
-- queues
-- async processing
+## Step 7 — Email Confirmation
 
-This prevents slower LLM response times from affecting UX.
+After successful lead submission:
+- EmailJS sends a confirmation email
+- users receive audit confirmation
+- Credex consultation intent is reinforced
 
-## Stronger Validation & Abuse Protection
-At scale I would add:
+Environment variables are used for all EmailJS credentials.
+
+---
+
+# Why I Chose This Stack
+
+## Next.js
+
+Chosen because it provides:
+- fast deployment
+- excellent developer experience
+- App Router support
+- server/client rendering flexibility
+- built-in API routes
+- strong Vercel integration
+
+The framework also simplified:
+- Open Graph metadata generation
+- deployment
+- routing
+- production optimization
+
+---
+
+## TypeScript
+
+TypeScript was used to improve:
+- maintainability
+- type safety
+- audit engine correctness
+- CI reliability
+
+As the project grew, typed interfaces significantly reduced integration bugs across:
+- Firestore
+- audit results
+- component props
+- API responses
+
+---
+
+## Firebase Firestore
+
+Firestore dramatically accelerated MVP development because it:
+- removed backend infrastructure overhead
+- handled persistence immediately
+- simplified dynamic shareable URLs
+- reduced deployment complexity
+
+The tradeoff is reduced backend flexibility compared to a custom database/API architecture.
+
+---
+
+## OpenAI API
+
+OpenAI was used specifically for:
+- natural-language personalization
+- human-readable audit summaries
+
+The API was intentionally isolated behind server-side routes for security.
+
+---
+
+## EmailJS
+
+EmailJS simplified transactional email delivery without requiring:
+- custom SMTP infrastructure
+- dedicated backend queues
+- additional deployment complexity
+
+This was especially valuable for rapid MVP iteration.
+
+---
+
+# Open Graph Metadata
+
+Audit pages expose:
+- Open Graph metadata
+- Twitter card metadata
+
+to support rich previews when shared on:
+- X/Twitter
+- Discord
+- Slack
+- LinkedIn
+
+This improves:
+- virality
+- screenshot sharing
+- click-through rates
+- product discoverability
+
+---
+
+# Abuse Protection
+
+The lead capture form includes a lightweight honeypot field to reduce automated spam submissions.
+
+This approach was chosen because it:
+- adds zero UX friction
+- requires no CAPTCHA interaction
+- works well for MVP-scale traffic
+
+More advanced rate limiting would likely be necessary at larger scale.
+
+---
+
+# Testing Strategy
+
+The project includes automated Vitest coverage for the audit engine.
+
+Tests validate:
+- downgrade recommendation logic
+- savings calculations
+- Credex recommendation thresholds
+- already-optimal plan handling
+
+GitHub Actions automatically runs:
+- linting
+- tests
+
+on every push to `main`.
+
+---
+
+# What I Would Change at 10k Audits/Day
+
+If the product needed to scale significantly, I would make several architectural changes.
+
+## 1. Move Audit Logic Server-Side
+
+Currently some recommendation logic runs client-side for simplicity and responsiveness.
+
+At larger scale:
+- centralized server-side evaluation
 - rate limiting
-- CAPTCHA
-- server-side schema validation
-- IP throttling
+- analytics
+- abuse prevention
+
+would become more important.
 
 ---
 
-# Tradeoffs Made
+## 2. Add Caching Layer
 
-## Firebase vs Custom Backend
-Firebase sacrifices some backend flexibility but dramatically increases shipping speed for an MVP.
+Popular public audit pages and metadata would benefit from:
+- Redis caching
+- edge caching
+- ISR/revalidation
 
-## Rule-Based Logic vs AI Recommendations
-Hardcoded rules are less flexible but significantly more trustworthy for financial optimization recommendations.
-
-## Client Components vs Server Components
-Client components simplified local state handling and Firebase integration during rapid development, even though server-heavy architecture may scale better long-term.
-
-## Minimal Authentication
-The MVP intentionally avoids authentication friction to maximize conversion rates and audit completion.
+to reduce repeated Firestore reads.
 
 ---
 
-# Future Improvements
+## 3. Replace Firestore With Dedicated Backend Services
 
-Planned future improvements include:
-- AI-generated personalized summaries
-- PDF report export
-- Open Graph image generation
-- benchmark comparisons
-- transactional emails
-- analytics instrumentation
-- referral system
-- admin dashboard
-- pricing auto-sync from vendor APIs
+As complexity increased, I would likely migrate toward:
+- Postgres
+- Prisma
+- dedicated API services
 
----
-
-## Abuse Protection
-
-A lightweight honeypot field was implemented in the lead capture form to reduce automated spam submissions without adding user friction.
+for:
+- stronger relational querying
+- analytics pipelines
+- organizational accounts
+- billing workflows
 
 ---
 
-## Transactional Emails
+## 4. Add Analytics Infrastructure
 
-Transactional emails are implemented using EmailJS for rapid MVP deployment and simplified integration.
+At scale I would introduce:
+- PostHog
+- Mixpanel
+- event pipelines
+- funnel analytics
 
-The email flow is triggered after lead capture submission and operates independently from audit generation to avoid blocking the user experience if email delivery fails.
+to better understand:
+- conversion behavior
+- audit completion dropoff
+- viral sharing dynamics
 
 ---
 
-## Open Graph Metadata
+## 5. Queue AI Summary Generation
 
-Audit pages expose Open Graph and Twitter metadata to support rich previews when shared on social platforms such as X, Discord, Slack, and LinkedIn.
+LLM requests would eventually move into:
+- background queues
+- async processing
+- retry systems
 
-This improves viral distribution and makes audit reports more shareable.
+to reduce latency and improve reliability under heavy load.
 
 ---
 
+# Security Considerations
+
+The application avoids exposing secrets by:
+- isolating OpenAI usage server-side
+- storing environment variables securely
+- excluding sensitive user details from public audit pages
+
+No authentication was added intentionally because:
+- reducing friction was critical
+- the product is designed for quick anonymous audits
+- lead capture occurs after value delivery
+
+---
+
+# Deployment
+
+The application is deployed on Vercel.
+
+Deployment pipeline:
+- GitHub push
+- automatic Vercel deployment
+- CI validation
+- production build generation
+
+This provides:
+- rapid iteration
+- easy rollback support
+- preview deployments
+- production-ready hosting
