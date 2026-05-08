@@ -16,25 +16,39 @@ https://credex-ai-audit-flax.vercel.app/
 
 ## Landing Page
 
-![Landing page] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/homepage.png)
+<img src="https://raw.githubusercontent.com/yuvika-09/credex-ai-audit/main/public/screenshots/homepage.png" width="900"/>
 
 ---
 
 ## Audit Results
 
-![Audit results] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/audit-results.png)
+<img src="https://raw.githubusercontent.com/yuvika-09/credex-ai-audit/main/public/screenshots/audit-results.png" width="900"/>
 
 ---
 
 ## Lead Capture Flow
 
-![Email input form] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/generate-report.png)
+### Email Input Form
 
-![Report generation confirmation] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/report-capture.png)
+<img src="https://raw.githubusercontent.com/yuvika-09/credex-ai-audit/main/public/screenshots/generate-report.png" width="900"/>
 
-![Confirmation email] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/audit-report-email.png)
+---
 
-![Lead captured] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/lead-captured.png)
+### Report Generation Confirmation
+
+<img src="https://raw.githubusercontent.com/yuvika-09/credex-ai-audit/main/public/screenshots/report-capture.png" width="900"/>
+
+---
+
+### Confirmation Email
+
+<img src="https://raw.githubusercontent.com/yuvika-09/credex-ai-audit/main/public/screenshots/audit-report-email.png" width="900"/>
+
+---
+
+### Lead Captured
+
+<img src="https://raw.githubusercontent.com/yuvika-09/credex-ai-audit/main/public/screenshots/lead-captured.png" width="900"/>
 
 ---
 
