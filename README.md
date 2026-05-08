@@ -16,25 +16,25 @@ https://credex-ai-audit-flax.vercel.app/
 
 ## Landing Page
 
-![Landing page] (./public/screenshots/homepage.png)
+![Landing page] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/homepage.png)
 
 ---
 
 ## Audit Results
 
-![Audit results] (./public/screenshots/audit-results.png)
+![Audit results] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/audit-results.png)
 
 ---
 
 ## Lead Capture Flow
 
-![Email input form] (./public/screenshots/generate-report.png)
+![Email input form] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/generate-report.png)
 
-![Report generation confirmation] (./public/screenshots/report-capture.png)
+![Report generation confirmation] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/report-capture.png)
 
-![Confirmation email] (./public/screenshots/audit-report-email.png)
+![Confirmation email] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/audit-report-email.png)
 
-![Lead captured] (./public/screenshots/lead-captured.png)
+![Lead captured] (https://github.com/yuvika-09/credex-ai-audit/blob/main/public/screenshots/lead-captured.png)
 
 ---
 
