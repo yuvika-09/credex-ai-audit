@@ -235,3 +235,11 @@ Planned future improvements include:
 ## Abuse Protection
 
 A lightweight honeypot field was implemented in the lead capture form to reduce automated spam submissions without adding user friction.
+
+---
+
+## Transactional Emails
+
+Transactional emails are implemented using EmailJS for rapid MVP deployment and simplified integration.
+
+The email flow is triggered after lead capture submission and operates independently from audit generation to avoid blocking the user experience if email delivery fails.

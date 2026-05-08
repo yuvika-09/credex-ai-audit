@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { saveLead } from "@/lib/saveLead";
+import emailjs from "@emailjs/browser";
 
 export default function LeadCapture({
     auditId,
@@ -12,37 +13,61 @@ export default function LeadCapture({
     const [email, setEmail] = useState("");
     const [company, setCompany] = useState("");
     const [role, setRole] = useState("");
+    const [website, setWebsite] = useState("");
 
     const [submitted, setSubmitted] =
         useState(false);
 
     async function handleSubmit() {
 
-        if (!email) return;
+        console.log("Submit clicked");
 
-        if (website) return;
+        if (!email) {
+            console.log("No email entered");
+            return;
+        }
 
-        await saveLead({
-            email,
-            company,
-            role,
-            auditId,
-            createdAt: new Date(),
-        });
+        if (website) {
+            console.log("Blocked by honeypot");
+            return;
+        }
 
-        await fetch("/api/send-email", {
-            method: "POST",
+        try {
 
-            headers: {
-                "Content-Type": "application/json",
-            },
+            console.log("Saving lead...");
 
-            body: JSON.stringify({
+            await saveLead({
                 email,
-            }),
-        });
+                company,
+                role,
+                auditId,
+                createdAt: new Date(),
+            });
 
-        setSubmitted(true);
+            console.log("Lead saved");
+
+            console.log("Sending email...");
+
+            const response = await emailjs.send(
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+                {
+                    to_email: email,
+                },
+                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+            );
+
+            console.log("EMAILJS SUCCESS:", response);
+
+            setSubmitted(true);
+
+        } catch (error) {
+
+            console.error("EMAILJS ERROR:", error);
+
+            alert("Failed to send email.");
+        }
+
     }
 
     if (submitted) {
@@ -53,12 +78,10 @@ export default function LeadCapture({
                 </h2>
 
                 <p className="mt-2">
-                    A confirmation email has been sent.
+                    Your audit report has been sent successfully.
                 </p>
             </div>
         );
-
-        const [website, setWebsite] = useState("");
     }
 
     return (
@@ -99,13 +122,13 @@ export default function LeadCapture({
             />
 
             <input
-    type="text"
-    value={website}
-    onChange={(e) =>
-        setWebsite(e.target.value)
-    }
-    className="hidden"
-/>
+                type="text"
+                value={website}
+                onChange={(e) =>
+                    setWebsite(e.target.value)
+                }
+                className="hidden"
+            />
 
             <button
                 onClick={handleSubmit}
