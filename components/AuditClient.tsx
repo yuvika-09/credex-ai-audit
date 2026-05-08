@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import LeadCapture from "./LeadCapture";
+import {
+    AuditResult,
+    Recommendation,
+} from "@/types/audit";
+
 
 export default function AuditClient({
     id,
@@ -11,7 +16,11 @@ export default function AuditClient({
     id: string;
 }) {
 
-    const [audit, setAudit] = useState<any>(null);
+    interface AuditDocument {
+        result: AuditResult;
+        summary: string;
+    }
+    const [audit, setAudit] = useState<AuditDocument | null>(null);
 
     useEffect(() => {
 
@@ -22,7 +31,7 @@ export default function AuditClient({
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
-                setAudit(docSnap.data());
+                setAudit(docSnap.data() as AuditDocument);
             }
         }
 
@@ -78,7 +87,7 @@ export default function AuditClient({
                 <div className="space-y-5 mt-8">
 
                     {audit.result.recommendations.map(
-                        (item: any, index: number) => (
+                        (item: Recommendation, index: number) => (
                             <div
                                 key={index}
                                 className="border border-gray-700 rounded-xl p-5"

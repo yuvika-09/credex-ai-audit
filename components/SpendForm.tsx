@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { generateAudit } from "@/lib/auditEngine";
 import { saveAudit } from "@/lib/saveAudit";
 import { useRouter } from "next/navigation";
+import { AuditResult, Recommendation, ToolInput } from "@/types/audit";
 
 export default function SpendForm() {
     const router = useRouter();
-    const [auditResult, setAuditResult] = useState<any>(null);
-    const [tools, setTools] = useState([
+    const [auditResult, setAuditResult] = useState<AuditResult | null>(null);
+    const [tools, setTools] = useState<ToolInput[]>([
         {
             tool: "Cursor",
             plan: "Pro",
@@ -20,6 +21,7 @@ export default function SpendForm() {
     const [teamSize, setTeamSize] = useState(1);
     const [useCase, setUseCase] = useState("coding");
 
+    /* eslint-disable react-hooks/set-state-in-effect */
     useEffect(() => {
         const saved = localStorage.getItem("audit-form");
 
@@ -218,7 +220,7 @@ export default function SpendForm() {
                     </div>
 
                     <div className="space-y-4">
-                        {auditResult.recommendations.map((item: any, index: number) => (
+                        {auditResult.recommendations.map((item: Recommendation, index: number) => (
                             <div
                                 key={index}
                                 className="border border-gray-700 rounded-xl p-4"

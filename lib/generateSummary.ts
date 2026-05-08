@@ -1,10 +1,11 @@
 import OpenAI from "openai";
+import { AuditResult } from "@/types/audit";
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function generateSummary(audit: any) {
+export async function generateSummary(audit: AuditResult) {
 
     try {
 

@@ -1,8 +1,15 @@
-export function generateAudit(tools: any[]) {
+import {
+    ToolInput,
+    AuditResult,
+} from "@/types/audit";
+
+export function generateAudit(
+    tools: ToolInput[]
+): AuditResult {
 
     let totalSavings = 0;
 
-    const recommendations = tools.map((tool: any) => {
+    const recommendations = tools.map((tool: ToolInput) => {
 
         let recommendedPlan = tool.plan;
         let savings = 0;

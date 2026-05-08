@@ -1,7 +1,13 @@
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "./firebase";
 
-export async function saveLead(data: any) {
+export async function saveLead(data: {
+    email: string;
+    company: string;
+    role: string;
+    auditId: string;
+    createdAt: Date;
+}) {
 
     try {
 
