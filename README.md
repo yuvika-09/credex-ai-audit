@@ -16,31 +16,25 @@ https://credex-ai-audit-flax.vercel.app/
 
 ## Landing Page
 
-Add screenshot here.
-
-```txt
-public/screenshots/homepage.png
-```
+![Landing page] (./public/screenshots/homepage.png)
 
 ---
 
 ## Audit Results
 
-Add screenshot here.
-
-```txt
-public/screenshots/audit-results.png
-```
+![Audit results] (./public/screenshots/audit-results.png)
 
 ---
 
 ## Lead Capture Flow
 
-Add screenshot here.
+![Email input form] (./public/screenshots/generate-report.png)
 
-```txt
-public/screenshots/lead-capture.png
-```
+![Report generation confirmation] (./public/screenshots/report-capture.png)
+
+![Confirmation email] (./public/screenshots/audit-report-email.png)
+
+![Lead captured] (./public/screenshots/lead-captured.png)
 
 ---
 
@@ -88,7 +82,7 @@ public/screenshots/lead-capture.png
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/credex-ai-audit.git
+git clone https://github.com/yuvika-09/credex-ai-audit.git
 ```
 
 ---
