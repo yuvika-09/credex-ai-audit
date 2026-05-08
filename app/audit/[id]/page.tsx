@@ -68,6 +68,18 @@ export default function AuditPage({
 
                 </div>
 
+                <div className="mt-10 border border-gray-700 rounded-2xl p-6">
+
+                    <h2 className="text-2xl font-bold">
+                        AI Summary
+                    </h2>
+
+                    <p className="text-gray-300 mt-4 leading-7">
+                        {audit.summary}
+                    </p>
+
+                </div>
+
                 <div className="space-y-5 mt-8">
 
                     {audit.result.recommendations.map(

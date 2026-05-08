@@ -168,11 +168,27 @@ export default function SpendForm() {
 
                     setAuditResult(result);
 
+                    const response = await fetch(
+                        "/api/generate-summary",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+
+                            body: JSON.stringify(result),
+                        }
+                    );
+
+                    const data = await response.json();
+
                     const auditId = await saveAudit({
                         tools,
                         teamSize,
                         useCase,
                         result,
+                        summary: data.summary,
                         createdAt: new Date(),
                     });
 
