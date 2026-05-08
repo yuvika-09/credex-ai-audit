@@ -24,7 +24,7 @@ export const metadata = {
         description:
             "Find hidden savings across your AI tooling stack.",
 
-        url: "https://credex-ai-audit.vercel.app",
+        url: "credex-ai-audit-flax.vercel.app",
 
         siteName: "AI Spend Audit",
 

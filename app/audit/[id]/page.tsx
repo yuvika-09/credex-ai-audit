@@ -21,7 +21,7 @@ export async function generateMetadata({
             description:
                 "Discover hidden savings in your AI tooling stack.",
 
-            url: `https://yourdomain.com/audit/${resolvedParams.id}`,
+            url: `credex-ai-audit-flax.vercel.app/audit/${resolvedParams.id}`,
 
             siteName: "AI Spend Audit",
 
