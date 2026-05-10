@@ -186,3 +186,46 @@
 - Run Lighthouse audits and fix any remaining issues.
 - Remove temporary debug logs and cleanup unused code.
 - Perform full end-to-end production testing before submission.
+
+
+---
+
+
+## Day 5 — 2026-05-10
+
+**Hours worked:** 4
+
+**What I did:**
+- Conducted conversations with potential users for the project’s user research requirement.
+- Spoke with developers and startup-oriented users who actively use AI tools such as ChatGPT, Claude, Cursor, and GitHub Copilot in their workflows.
+- Asked questions focused on:
+  - AI subscription overlap
+  - monthly spend visibility
+  - team purchasing decisions
+  - willingness to switch tools for cost savings
+  - trust factors for an automated audit product
+- Collected direct quotes and documented surprising responses for `USER_INTERVIEWS.md`.
+- Updated interview notes into structured writeups including:
+  - role and company stage
+  - major pain points
+  - contradictions in tool usage
+  - product feedback
+  - design implications
+- Refined parts of the landing page messaging and audit positioning based on repeated feedback from interviews.
+- Adjusted some wording in the app to make recommendations sound more trustworthy and less aggressive after noticing users responded better to neutral, finance-style language.
+
+**What I learned:**
+- Most users do not actually track AI tooling spend carefully, especially when purchases happen across individual employee subscriptions.
+- Multiple people mentioned paying for overlapping AI tools simply because different teammates preferred different workflows.
+- Users trusted deterministic savings calculations more than vague AI-generated recommendations.
+- Several users said they would only share an audit publicly if the results looked benchmarkable or visually impressive.
+
+**Blockers / what I'm stuck on:**
+- Some interviewees had difficulty estimating their actual monthly AI spend because costs were spread across personal cards, startup reimbursements, and API usage.
+- Need to ensure the final interview writeups remain concise while still sounding authentic and detailed.
+
+**Plan for tomorrow:**
+- Finalize remaining documentation files.
+- Perform final QA pass across deployed production flows.
+- Run Lighthouse checks and improve any weak scores.
+- Clean up repository before submission.
