@@ -229,3 +229,26 @@
 - Perform final QA pass across deployed production flows.
 - Run Lighthouse checks and improve any weak scores.
 - Clean up repository before submission.
+
+
+---
+
+
+## Day 6 — 2026-05-11
+
+**Hours worked:** 0
+
+**What I did:**
+- Did not work on the project today due to university exam preparation and scheduling conflicts.
+
+**What I learned:**
+- Managing a longer project alongside academic deadlines requires more intentional planning and buffer time than I initially expected.
+
+**Blockers / what I'm stuck on:**
+- No technical blockers today.
+- Remaining work is mostly final polish, documentation review, and submission preparation.
+
+**Plan for tomorrow:**
+- Complete final QA testing on the deployed application.
+- Review all markdown deliverables for formatting consistency.
+- Verify CI, deployment, and Git history requirements before submission.
