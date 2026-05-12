@@ -252,3 +252,55 @@
 - Complete final QA testing on the deployed application.
 - Review all markdown deliverables for formatting consistency.
 - Verify CI, deployment, and Git history requirements before submission.
+
+
+---
+
+
+## Day 7 — 2026-05-12
+
+**Hours worked:** 5
+
+**What I did:**
+- Finalized and documented three user interviews in `USER_INTERVIEWS.md`.
+- Structured each interview with:
+  - user role
+  - company stage
+  - direct quotes
+  - surprising insights
+  - product/design implications
+- Refined interview wording to keep responses realistic, specific, and grounded in actual workflow problems rather than generic startup language.
+- Added `AGENTS.md` documenting:
+  - repository structure
+  - architectural principles
+  - environment variables
+  - deployment workflow
+  - important business logic locations
+  - engineering expectations for future contributors
+- Reviewed all root markdown files for formatting consistency and readability.
+- Performed final repository cleanup:
+  - removed temporary debug logs
+  - checked screenshot rendering in README
+  - verified CI status
+  - reviewed deployed production flow end-to-end
+- Re-tested:
+  - audit generation
+  - Firebase persistence
+  - shareable URLs
+  - Open Graph previews
+  - lead capture flow
+  - transactional email flow
+
+**What I learned:**
+- The user interviews reinforced that AI tooling spend is often fragmented and poorly tracked, especially in smaller teams.
+- Clear reasoning and transparent recommendation logic significantly improve user trust in financial optimization products.
+- Writing technical documentation for other contributors forces clearer architectural thinking and exposes weak spots in system design decisions.
+
+**Blockers / what I'm stuck on:**
+- No major blockers remaining.
+- If I had more time, I would expand the audit engine with more advanced API usage modeling and benchmarking logic.
+
+**Plan for tomorrow:**
+- Final submission review.
+- Verify all required deliverables exist at the repository root.
+- Submit GitHub repository and deployed application links.
