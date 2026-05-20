@@ -3,6 +3,12 @@
 import { useState } from "react";
 import { saveLead } from "@/lib/saveLead";
 import emailjs from "@emailjs/browser";
+import {
+    doc,
+    updateDoc,
+} from "firebase/firestore";
+
+import { db } from "@/lib/firebase";
 
 export default function LeadCapture({
     auditId,
@@ -20,8 +26,6 @@ export default function LeadCapture({
 
     async function handleSubmit() {
 
-        console.log("Submit clicked");
-
         if (!email) {
             console.log("No email entered");
             return;
@@ -34,8 +38,6 @@ export default function LeadCapture({
 
         try {
 
-            console.log("Saving lead...");
-
             await saveLead({
                 email,
                 company,
@@ -44,11 +46,7 @@ export default function LeadCapture({
                 createdAt: new Date(),
             });
 
-            console.log("Lead saved");
-
-            console.log("Sending email...");
-
-            const response = await emailjs.send(
+            await emailjs.send(
                 process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
                 process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
                 {
@@ -57,7 +55,12 @@ export default function LeadCapture({
                 process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
             );
 
-            console.log("EMAILJS SUCCESS:", response);
+            await updateDoc(
+                doc(db, "audits", auditId),
+                {
+                    email,
+                }
+            );
 
             setSubmitted(true);
 

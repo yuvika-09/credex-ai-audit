@@ -2,6 +2,7 @@ import {
     ToolInput,
     AuditResult,
 } from "@/types/audit";
+import { currentPricing } from "./currentPricing";
 
 export function generateAudit(
     tools: ToolInput[]
@@ -22,7 +23,12 @@ export function generateAudit(
             tool.seats <= 2
         ) {
             recommendedPlan = "Plus";
-            savings = tool.monthlySpend - 20 * tool.seats;
+            savings =
+                tool.monthlySpend -
+                (
+                    currentPricing.chatgpt.plus *
+                    tool.seats
+                );
 
             reason =
                 "ChatGPT Team is usually unnecessary for teams with fewer than 3 active collaborators.";
@@ -35,7 +41,12 @@ export function generateAudit(
             tool.seats <= 2
         ) {
             recommendedPlan = "Pro";
-            savings = tool.monthlySpend - 20 * tool.seats;
+            savings =
+                tool.monthlySpend -
+                (
+                    currentPricing.cursor.pro *
+                    tool.seats
+                );
 
             reason =
                 "Cursor Business becomes inefficient for smaller engineering teams.";
@@ -48,7 +59,12 @@ export function generateAudit(
             tool.seats <= 2
         ) {
             recommendedPlan = "Pro";
-            savings = tool.monthlySpend - 20 * tool.seats;
+            savings =
+                tool.monthlySpend -
+                (
+                    currentPricing.claude.pro *
+                    tool.seats
+                );
 
             reason =
                 "Claude Team pricing only becomes cost effective with larger collaborative usage.";

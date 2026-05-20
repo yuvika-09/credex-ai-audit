@@ -266,3 +266,13 @@ Workflow file:
 # License
 
 This project was built as part of the Credex Web Development Internship assignment.
+
+---
+
+## Round 2 Features
+
+- Pricing snapshot persistence
+- Dynamic pricing recalculation
+- Audit diff comparisons
+- Re-audit notifications
+- Historical audit versioning
