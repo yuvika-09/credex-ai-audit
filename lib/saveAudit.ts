@@ -1,15 +1,10 @@
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "./firebase";
-import { AuditResult, ToolInput } from "@/types/audit";
+import { SavedAudit } from "@/types/audit";
 
-export async function saveAudit(data: {
-    tools: ToolInput[];
-    teamSize: number;
-    useCase: string;
-    result: AuditResult;
-    summary: string;
-    createdAt: Date;
-}) {
+export async function saveAudit(
+    data: SavedAudit
+) {
 
     try {
 

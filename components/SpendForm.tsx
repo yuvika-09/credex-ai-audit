@@ -5,6 +5,9 @@ import { generateAudit } from "@/lib/auditEngine";
 import { saveAudit } from "@/lib/saveAudit";
 import { useRouter } from "next/navigation";
 import { AuditResult, Recommendation, ToolInput } from "@/types/audit";
+import { currentPricing } from "@/lib/currentPricing";
+import { flattenPricing } from "@/lib/flattenPricing";
+
 
 export default function SpendForm() {
     const router = useRouter();
@@ -250,6 +253,7 @@ export default function SpendForm() {
                             summary: data.summary,
                             createdAt:
                                 new Date(),
+                            pricingSnapshot: flattenPricing(currentPricing),
                         });
 
                     if (auditId) {
